@@ -6,8 +6,7 @@
           <div class="react-scroll-to-bottom--css-mebvg-79elbk h-full dark:bg-gray-800">
             <div class="react-scroll-to-bottom--css-mebvg-1n7m0yu">
               <div class="flex flex-col items-center text-sm dark:bg-gray-800">
-                <ResponseMessage :message="responseMessageOne" />
-                <ResponseMessage :message="responseMessageTwo" />
+                <ResponseMessage v-for="message of messages" :message="message" />
                 <div class="w-full h-32 md:h-48 flex-shrink-0"></div>
               </div>
             </div>
@@ -31,7 +30,8 @@
           </div> -->
               <div
                 class="flex flex-col w-full py-2 flex-grow md:py-3 md:pl-4 relative border border-black/10 bg-white dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)]">
-                <textarea tabindex="0" style="max-height: 200px; height: 24px; overflow-y: hidden;" rows="1"
+                <textarea @keydown.enter="submitInput" v-model="input" tabindex="0"
+                  style="max-height: 200px; height: 24px; overflow-y: hidden;" rows="1"
                   class="m-0 w-full resize-none border-0 bg-transparent p-0 pl-2 pr-7 focus:ring-0 focus-visible:ring-0 dark:bg-transparent md:pl-0"></textarea>
                 <button
                   class="absolute p-1 rounded-md text-gray-500 bottom-1.5 right-1 md:bottom-2.5 md:right-2 hover:bg-gray-100 dark:hover:text-gray-400 dark:hover:bg-gray-900 disabled:hover:bg-transparent dark:disabled:hover:bg-transparent">
@@ -72,6 +72,35 @@ const responseMessageTwo: Ref<Message> = ref({
   type: 'RESPONSE',
 })
 
+const messages: Ref<Message[]> = ref([]);
+
+const input = ref('');
+
+function submitInput() {
+  if (input.value === '') return;
+
+  const newText = input.value.replace(/(\r\n|\n|\r)/gm, "");
+  const newMessage: Message = {
+    id: messages.value.length,
+    text: newText,
+    type: 'INPUT',
+  };
+  messages.value.push(newMessage);
+  input.value = '';
+
+  generateResponse()
+}
+
+function generateResponse() {
+  const response = 'Meow '.repeat(Math.floor(Math.random() * 10) + 2);
+  
+  const newMessage: Message = {
+    id: messages.value.length,
+    text: response,
+    type: 'RESPONSE',
+  };
+  messages.value.push(newMessage);
+}
 
 </script>
 
