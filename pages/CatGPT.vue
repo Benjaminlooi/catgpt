@@ -6,6 +6,7 @@
           <div class="react-scroll-to-bottom--css-mebvg-79elbk h-full dark:bg-gray-800">
             <div class="react-scroll-to-bottom--css-mebvg-1n7m0yu">
               <div class="flex flex-col items-center text-sm dark:bg-gray-800">
+                <WelcomeMessage v-if="messages.length === 0" />
                 <ResponseMessage v-for="message of messages" :message="message" />
                 <div class="w-full h-32 md:h-48 flex-shrink-0"></div>
               </div>
