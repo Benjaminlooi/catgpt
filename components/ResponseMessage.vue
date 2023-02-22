@@ -7,7 +7,7 @@
         <div v-if="responseType === 'RESPONSE'"
           class="relative h-[30px] w-[30px] p-1 rounded-sm text-white flex items-center justify-center"
           style="background-color: rgb(16, 163, 127);">
-          <ChatGptIcon />
+          <CatGptIcon />
         </div>
 
         <div v-if="responseType === 'INPUT'"
